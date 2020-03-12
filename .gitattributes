@@ -1,0 +1,10 @@
+*.cfg	eol=lf
+*.conf eol=lf
+*.json	eol=lf
+*.mdown	eol=lf
+*.patch eol=lf
+*.seed	eol=lf
+*.sh	eol=lf
+*.txt	eol=lf
+*.bat	eol=crlf
+Vagrantfile.*	eol=lf

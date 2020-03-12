@@ -1,0 +1,107 @@
+{
+  "variables": {
+    "iso_name": "ubuntu-16.04.6-server-amd64.iso",
+    "iso_path": "E:/ISO/",
+    "iso_checksum": "16AFB1375372C57471EA5E29803A89A5A6BD1F6AABEA2E5E34AC1AB7EB9786AC",
+    "iso_checksum_type": "sha256",
+    "ssh_name": "deploy",
+    "ssh_pass": "deploy",
+    "vm_name": "Ubuntu-16.04-server-ansible-amd64",
+    "preseed": "ubuntu-server.seed",
+    "num_cpus": "2",
+    "mem_size": "512",
+    "disk_size": "10240",
+    "linux": "/install/linux",
+    "initrd": "/install/initrd.gz",
+    "headless": "false"
+  },
+  "builders": [
+    {
+      "type": "vmware-iso",
+      "boot_wait": "10s",
+      "disk_size": "{{user `disk_size`}}",
+      "disk_type_id": "0",
+      "guest_os_type": "ubuntu-64",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_urls": [
+        "{{user `iso_path` }}{{user `iso_name`}}"
+      ],
+      "ssh_username": "{{user `ssh_name`}}",
+      "ssh_password": "{{user `ssh_pass`}}",
+      "ssh_port": 22,
+      "ssh_timeout": "10000s",
+      "shutdown_command": "sudo /sbin/shutdown -h now",
+      "output_directory": "output/{{user `vm_name`}}-vmware",
+      "vm_name": "{{user `vm_name`}}",
+      "vmx_data": {
+        "memsize": "{{user `mem_size`}}",
+        "numvcpus": "{{user `num_cpus`}}",
+        "ethernet0.present": "TRUE",
+        "ethernet0.connectionType": "nat",
+        "ethernet0.virtualDev": "e1000",
+        "ethernet0.networkName": "VM Network",
+        "ethernet0.wakeOnPcktRcv": "FALSE",
+        "ethernet0.addressType": "generated",
+        "remotedisplay.vnc.enabled": "TRUE",
+        "vhv.enable": "TRUE"
+      },
+      "http_directory": "../http",
+      "headless": "{{user `headless`}}",
+      "boot_command": [
+        "<esc><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs>",
+        "{{user `linux`}} ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `preseed`}} ",
+        "debian-installer=en_GB auto=true locale=en_GB kbd-chooser/method=uk ",
+        "console-setup/ask_detect=false keyboard-configuration/layoutcode=uk ",
+        "hostname={{user `vm_name`}} ",
+        "initrd={{user `initrd`}} quiet --- <enter>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "../provisioners/base.sh",
+        "../provisioners/deploy.sh",
+        "../provisioners/ansible+testinfra.sh"
+      ],
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'",
+      "environment_vars": [
+        "ANSIBLE=ansible==2.4.2.0",
+        "TESTINFRA=testinfra==1.10.1"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/vmware-server.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/disk_cleanup.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/cleanup.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/outputs.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    }
+  ],
+  "post-processors": []
+}

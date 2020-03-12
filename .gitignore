@@ -1,0 +1,10 @@
+**/.vagrant/
+**/*.box
+**/*.iso
+**/Vagrantfile
+!**/Vagrantfile.*
+**/output-virtualbox-iso/
+**/output-vmware-iso/
+**/packer_cache/
+.DS_Store
+**/output/
