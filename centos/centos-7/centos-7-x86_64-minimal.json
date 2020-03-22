@@ -1,0 +1,72 @@
+{
+  "variables": {
+    "iso_name": "CentOS-7-x86_64-Minimal-1908.iso",
+    "iso_path": "E:/ISO/",
+    "iso_checksum": "9a2c47d97b9975452f7d582264e9fc16d108ed8252ac6816239a3b58cef5c53d",
+    "iso_checksum_type": "sha256",
+    "mem_size": "1024",
+    "disk_size": "10240",
+    "ssh_name": "root",
+    "ssh_pass": "deploy",
+    "name": "CentOS-7-x86_64-minimal"
+  },
+  "builders": [
+    {
+      "type": "vmware-iso",
+      "name": "{{ user `name`}}",
+      "boot_wait": "10s",
+      "disk_size": "{{user `disk_size`}}",
+      "disk_type_id": "0",
+      "guest_os_type": "{{user `vmware_guest_os_type`}}",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "iso_urls": [
+        "{{user `iso_path` }}/{{user `iso_name`}}",
+        "http://mirrors.ukfast.co.uk/sites/ftp.centos.org/7.7.1908/isos/x86_64/{{user `iso_name`}}"
+      ],
+      "ssh_username": "{{user `ssh_name`}}",
+      "ssh_password": "{{user `ssh_pass`}}",
+      "ssh_port": 22,
+      "ssh_timeout": "10000s",
+      "shutdown_command": "shutdown -h now",
+      "vm_name": "{{build_name}}",
+      "headless": "{{ user `headless`}}",
+      "vmx_data": {
+        "memsize": "{{user `mem_size`}}",
+        "numvcpus": "2",
+        "ethernet0.present": "TRUE",
+        "ethernet0.connectionType": "nat",
+        "ethernet0.virtualDev": "e1000",
+        "ethernet0.networkName": "VM Network",
+        "ethernet0.wakeOnPcktRcv": "FALSE",
+        "ethernet0.addressType": "generated",
+        "remotedisplay.vnc.enabled": "TRUE",
+        "vhv.enable": "TRUE"
+      },
+      "http_directory": "../http",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "../provisioners/base-7.sh",
+        "../provisioners/kernel_stuff.sh",
+        "../provisioners/tools.sh",
+        "../provisioners/vmtools.sh",
+        "../provisioners/disk_cleanup.sh",
+        "../provisioners/cleanup.sh"
+      ],
+      "environment_vars": [
+        "EPEL_RELEASE=epel-release",
+        "ANSIBLE=ansible",
+        "PYTHON_PIP=python-pip",
+        "TESTINFRA=testinfra"
+      ]
+    }
+  ],
+  "post-processors": []
+}

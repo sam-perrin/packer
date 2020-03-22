@@ -1,0 +1,29 @@
+- hosts: master[0]
+  become: yes
+  gather_facts: false
+  tasks:
+    - name: get join command
+      shell: kubeadm token create --print-join-command
+      register: join_command_raw
+
+    - name: set join command
+      set_fact:
+        join_command: "{{ join_command_raw.stdout_lines[0] }}"
+
+- hosts: workers
+  become: yes
+  tasks:
+    - name: join cluster
+      shell: "{{ hostvars[groups['master'][0]].join_command }} --ignore-preflight-errors all  >> node_joined.txt"
+      args:
+        chdir: $HOME
+        creates: node_joined.txt
+
+    - name: "Ensure /root/node_joined.txt contains 'This node has joined the cluster'"
+      lineinfile:
+        name: /root/node_joined.txt
+        line: "This node has joined the cluster:"
+        state: present
+      check_mode: yes
+      register: nodejoined
+      failed_when: (nodejoined is changed) or (nodejoined is failed)

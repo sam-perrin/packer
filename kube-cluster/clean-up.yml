@@ -1,0 +1,137 @@
+- hosts: master
+  become: yes
+  tasks:
+  - name: remove pod_network_setup.txt file
+    file:
+      path: /home/centos/pod_network_setup.txt
+      state: absent
+
+  - name: remove cluster_initialized.txt file
+    file:
+      path: /root/cluster_initialized.txt
+      state: absent
+    
+- hosts: workers
+  become: yes
+  tasks:
+  - name: remove node_joined.txt file
+    file:
+      path: /root/node_joined.txt
+      state: absent
+
+- hosts: all
+  become: yes
+  tasks:
+  - name: Remove Kubernetes repository
+    yum_repository:
+      name: Kubernetes
+      state: absent
+  
+  - name: gather installed services
+    service_facts:
+
+  - name: Check if kubeadm is installed
+    shell: rpm -q kubeadm
+    register: kubeadm_check
+    ignore_errors: yes
+
+  - name: kubeadm reset
+    shell: kubeadm reset --force
+    when: kubeadm_check.rc == 0
+
+  - name: stop kubelet
+    service:
+      name: kubelet
+      state: stopped
+      enabled: no
+    when: "'kubelet' in services"
+
+  - name: stop docker
+    service:
+      name: docker
+      state: stopped
+      enabled: no
+    when: "'docker' in services"
+
+  - name: remove /var/lib/cni/ files/directory
+    file:
+      path: /var/lib/cni/
+      state: absent
+
+  - name: umount pods
+    shell: umount $(df -HT | grep '/var/lib/kubelet/pods' | awk '{print $7}')
+    ignore_errors: yes
+
+  - name: remove /var/lib/kubelet/ files/directory
+    file:
+      path: /var/lib/kubelet/
+      state: absent
+    
+  - name: remove /etc/cni files/directory
+    file:
+      path: /etc/cni/
+      state: absent
+
+  - name: set cni0 network down
+    shell: ifconfig cni0 down
+    ignore_errors: yes
+
+  - name: set flannel.1 network down
+    shell: ifconfig flannel.1 down
+    ignore_errors: yes
+
+  - name: set docker0 network down
+    shell: ifconfig docker0 down
+    ignore_errors: yes
+
+  - name: delete cni0 ip links
+    shell: ip link delete cni0
+    ignore_errors: yes
+
+  - name: delete flannel.1 ip links
+    shell: ip link delete flannel.1
+    ignore_errors: yes
+
+  - name: remove kubeadm
+    yum:
+      name: kubeadm
+      state: absent
+
+  - name: remove kubelet
+    yum:
+      name: kubelet
+      state: absent
+
+  - name: remove docker
+    yum:
+      name: docker
+      state: absent
+
+- hosts: master
+  become: yes
+  tasks:
+  - name: Check if kubectl is installed
+    shell: rpm -q kubectl
+    register: kubectl_check
+    ignore_errors: yes
+
+  - name: remove kubectl
+    yum:
+      name: kubectl
+      state: absent
+    when: kubectl_check.rc == 0
+
+- hosts: all
+  become: yes
+  tasks:
+
+  - name: yum-clean-metadata
+    command: yum clean metadata
+    args:
+      warn: no
+
+  - name: systemctl daemon-reload
+    shell: systemctl daemon-reload
+  
+  - name: reboot hosts
+    reboot:

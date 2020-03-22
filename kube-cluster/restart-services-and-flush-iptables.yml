@@ -1,0 +1,32 @@
+- hosts: workers
+  become: yes
+  serial: 1
+  tasks:
+  - name: stop kubelet
+    service:
+      name: kubelet
+      state: stopped
+
+  - name: stop docker
+    service:
+      name: docker
+      state: stopped
+
+  - name: iptables flush
+    iptables:
+      flush: yes
+
+  - name: iptables flush nat
+    iptables:
+      table: nat
+      flush: yes
+
+  - name: start docker
+    service:
+      name: docker
+      state: started
+
+  - name: start kubelet
+    service:
+      name: kubelet
+      state: started

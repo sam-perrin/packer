@@ -1,0 +1,57 @@
+- hosts: master[0]
+  become: yes
+  tasks:
+    - name: initialize the cluster
+      shell: kubeadm init --pod-network-cidr=10.244.0.0/16 >> cluster_initialized.txt
+      args:
+        chdir: $HOME
+        creates: cluster_initialized.txt
+
+    - name: "Ensure /root/cluster_initialized.txt contains 'Your Kubernetes control-plane has initialized successfully!'"
+      lineinfile:
+        name: /root/cluster_initialized.txt
+        line: "Your Kubernetes control-plane has initialized successfully!"
+        state: present
+      check_mode: yes
+      register: clusterinit
+      failed_when: (clusterinit is changed) or (clusterinit is failed)
+
+    - name: Create a centos user
+      user:
+        name: centos
+        password: "SHA512"
+        state: present
+        shell: /bin/bash 
+        system: no
+        createhome: yes
+        home: /home/centos
+
+    - name: copy ansible host root public key to centos user
+      authorized_key:
+        user: centos
+        state: present
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+    - name: create .kube directory
+      become: yes
+      become_user: centos
+      file:
+        path: $HOME/.kube
+        state: directory
+        mode: 0755
+
+    - name: copy admin.conf to user's kube config
+      copy:
+        src: /etc/kubernetes/admin.conf
+        dest: /home/centos/.kube/config
+        remote_src: yes
+        owner: centos
+
+    - name: install Pod network
+      become: yes
+      become_user: centos
+      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml >> pod_network_setup.txt
+      args:
+        chdir: $HOME
+        creates: pod_network_setup.txt
+

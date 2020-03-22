@@ -1,0 +1,90 @@
+- hosts: all
+  become: yes
+  tasks:
+   - name: re-install ca-certificates
+     yum:
+       name: ca-certificates
+       state: latest
+       update_cache: yes
+
+   - name: Update CA trust
+     shell: update-ca-trust extract
+
+   - name: install Docker
+     yum:
+       name: docker
+       state: present
+       update_cache: true
+
+   - name: start and enable Docker
+     service:
+       name: docker
+       state: started
+       enabled: yes
+
+   - name: disable swap
+     shell: swapoff -a
+
+   - name: disable swap permanently
+     replace:
+       path: /etc/fstab
+       regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
+       replace: '#\1\2\3swap\4'
+       backup: yes
+
+   - name: disable SELinux on reboot
+     selinux:
+       state: disabled
+     register: selinux
+
+   - name: reboot hosts after selinux
+     reboot:
+     when: selinux.changed
+
+   - name: ensure net.bridge.bridge-nf-call-ip6tables is set to 1
+     sysctl:
+      name: net.bridge.bridge-nf-call-ip6tables
+      value: 1
+      state: present
+
+   - name: ensure net.bridge.bridge-nf-call-iptables is set to 1
+     sysctl:
+      name: net.bridge.bridge-nf-call-iptables
+      value: 1
+      state: present
+
+   - name: add Kubernetes' YUM repository
+     yum_repository:
+      name: Kubernetes
+      description: Kubernetes YUM repository
+      baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+      gpgkey: https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+      gpgcheck: yes
+
+   - name: install kubeadm
+     yum:
+        name: kubeadm
+        state: present
+
+   - name: install kubelet
+     yum:
+        name: kubelet
+        state: present
+        update_cache: true  
+
+  #  - name: start kubelet
+  #    service:
+  #      name: kubelet
+  #      enabled: yes
+  #      state: started
+
+- hosts: master
+  become: yes
+  tasks:
+   - name: install kubectl
+     yum:
+        name: kubectl
+        state: present
+        allow_downgrade: yes
+
+

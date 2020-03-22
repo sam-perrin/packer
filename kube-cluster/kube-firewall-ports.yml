@@ -1,0 +1,122 @@
+- hosts: all
+  become: yes
+  tasks:
+   - name: start and enable firewalld
+     service:
+       name: firewalld
+       enabled: yes
+       state: started
+
+   - name: ensure log denis is off
+     command: /bin/firewall-cmd --set-log-denied=off
+    # in case this is also a node where firewalld turned off
+     ignore_errors: yes
+
+- hosts: workers
+  become: yes
+  tasks:
+   - name: set firewall 30000-32767/tcp
+     firewalld:
+       port: 30000-32767/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 10250/tcp
+     firewalld:
+       port: 10250/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 10255/tcp
+     firewalld:
+       port: 10255/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 6783/tcp
+     firewalld:
+       port: 6783/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 8285/udp
+     firewalld:
+       port: 8285/udp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 8472/udp
+     firewalld:
+       port: 8472/udp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 2379-2380/tcp
+     firewalld:
+       port: 2379-2380/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: Save flanneld subnet traffic
+     command: /bin/firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 1 -i flannel.1 -j ACCEPT -m comment --comment "flannel subnet"
+    # in case this is also a node where firewalld turned off
+     ignore_errors: yes
+
+- hosts: master
+  become: yes
+  tasks:
+   - name: set firewall 6443/tcp
+     firewalld:
+       port: 6443/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 2379-2380/tcp
+     firewalld:
+       port: 2379-2380/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 10250-10252/tcp
+     firewalld:
+       port: 10250-10252/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 10255/tcp
+     firewalld:
+       port: 10255/tcp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 8285/udp
+     firewalld:
+       port: 8285/udp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: set firewall 8472/udp
+     firewalld:
+       port: 8472/udp
+       permanent: yes
+       immediate: yes
+       state: enabled
+
+   - name: Save flanneld subnet traffic
+     command: /bin/firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 1 -i flannel.1 -j ACCEPT -m comment --comment "flannel subnet"
+    # in case this is also a node where firewalld turned off
+     ignore_errors: yes
+
+
