@@ -1,8 +1,8 @@
 {
   "variables": {
-    "iso_name": "ubuntu-16.04.6-server-amd64.iso",
-    "iso_path": "E:/ISO/",
-    "iso_checksum": "16AFB1375372C57471EA5E29803A89A5A6BD1F6AABEA2E5E34AC1AB7EB9786AC",
+    "iso_name": "ubuntu-18.04.4-server-amd64.iso",
+    "iso_path": "D:/ISO/",
+    "iso_checksum": "E2ECDACE33C939527CBC9E8D23576381C493B071107207D2040AF72595F8990B",
     "iso_checksum_type": "sha256",
     "ssh_name": "deploy",
     "ssh_pass": "deploy",
@@ -253,6 +253,12 @@
       "type": "shell",
       "script": "../provisioners/outputs.sh",
       "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    },
+    {
+      "type": "file",
+      "source": "/home/{{user `ssh_name`}}/serverinfo-{{build_name}}.txt",
+      "destination": "./output/serverinfo-{{build_name}}.txt",
+      "direction": "download"
     }
   ],
   "post-processors": []

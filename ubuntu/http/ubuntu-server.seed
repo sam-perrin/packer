@@ -1,7 +1,7 @@
 #### Contents of the preconfiguration file (for squeeze)
 ### Localization
 # Preseeding only locale sets language, country and locale.
-d-i debian-installer/locale string en_US
+d-i debian-installer/locale string en_GB.UTF-8
 
 # The values can also be preseeded individually for greater flexibility.
 #d-i debian-installer/language string en
@@ -14,7 +14,7 @@ d-i debian-installer/locale string en_US
 # Disable automatic (interactive) keymap detection.
 d-i console-setup/ask_detect boolean false
 #d-i keyboard-configuration/modelcode string pc105
-d-i keyboard-configuration/layoutcode string us
+d-i keyboard-configuration/layoutcode string gb
 # To select a variant of the selected layout (if you leave this out, the
 # basic form of the layout will be used):
 #d-i keyboard-configuration/variantcode string dvorak
