@@ -9,7 +9,7 @@
     "vm_name": "Ubuntu-1804",
     "preseed": "ubuntu-server.seed",
     "num_cpus": "2",
-    "mem_size": "512",
+    "mem_size": "2048",
     "disk_size": "10240",
     "linux": "/install/linux",
     "initrd": "/install/initrd.gz",
@@ -33,7 +33,6 @@
       "ssh_port": 22,
       "ssh_timeout": "10000s",
       "shutdown_command": "sudo /sbin/shutdown -h now",
-      "output_directory": "output/{{user `vm_name`}}-vmware",
       "vm_name": "{{user `vm_name`}}",
       "vmx_data": {
         "memsize": "{{user `mem_size`}}",
@@ -74,28 +73,16 @@
       "type": "shell",
       "scripts": [
         "../provisioners/base.sh",
+        "../provisioners/ssh-keys.sh",
         "../provisioners/deploy.sh",
-        "../provisioners/ansible+testinfra.sh"
+        "../provisioners/hosts.sh",
+        "../provisioners/vmware-server.sh"
       ],
-      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'",
-      "environment_vars": [
-        "ANSIBLE=ansible==2.4.2.0",
-        "TESTINFRA=testinfra==1.10.1"
-      ]
-    },
-    {
-      "type": "shell",
-      "script": "../provisioners/vmware-server.sh",
       "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
     },
     {
       "type": "shell",
       "script": "../provisioners/disk_cleanup.sh",
-      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
-    },
-    {
-      "type": "shell",
-      "script": "../provisioners/cleanup.sh",
       "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
     },
     {
@@ -108,6 +95,11 @@
       "source": "/home/{{user `ssh_name`}}/serverinfo-{{build_name}}.txt",
       "destination": "./output/serverinfo-{{build_name}}.txt",
       "direction": "download"
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/cleanup.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
     }
   ],
   "post-processors": []
