@@ -1,7 +1,5 @@
 #!/bin/sh -ex
-yum -y install ${ANSIBLE:-ansible}
-yum -y install ${PYTHON_PIP:-python-pip}
-yum -y install python-devel
+yum install -y vim wget curl rsync screen
 yum -y groupinstall 'development tools'
-pip install --upgrade pip 
-pip install ${TESTINFRA:-testinfra}
+#yum install -y --enablerepo epel open-vm-tools
+yum install -y open-vm-tools

@@ -1,8 +1,7 @@
 {
   "variables": {
-    "iso_name": "CentOS-7-x86_64-Minimal-1908.iso",
-    "iso_path": "E:/ISO/",
-    "iso_checksum": "9a2c47d97b9975452f7d582264e9fc16d108ed8252ac6816239a3b58cef5c53d",
+    "iso_name": "CentOS-7-x86_64-Minimal-2003.iso",
+    "iso_checksum": "659691c28a0e672558b003d223f83938f254b39875ee7559d1a4a14c79173193",
     "iso_checksum_type": "sha256",
     "mem_size": "1024",
     "disk_size": "10240",
@@ -21,8 +20,7 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
-        "{{user `iso_path` }}/{{user `iso_name`}}",
-        "http://mirrors.ukfast.co.uk/sites/ftp.centos.org/7.7.1908/isos/x86_64/{{user `iso_name`}}"
+        "http://mirrors.melbourne.co.uk/centos/7.8.2003/isos/x86_64/{{user `iso_name`}}"
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
@@ -56,7 +54,6 @@
         "../provisioners/base-7.sh",
         "../provisioners/kernel_stuff.sh",
         "../provisioners/tools.sh",
-        "../provisioners/vmtools.sh",
         "../provisioners/disk_cleanup.sh",
         "../provisioners/cleanup.sh"
       ],

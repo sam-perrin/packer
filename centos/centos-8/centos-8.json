@@ -1,7 +1,6 @@
 {
   "variables": {
     "iso_name": "CentOS-8.1.1911-x86_64-dvd1.iso",
-    "iso_path": "E:/ISO/",
     "iso_checksum": "3EE3F4EA1538E026FFF763E2B284A6F20B259D91D1AD5688F5783A67D279423B",
     "iso_checksum_type": "sha256",
     "mem_size": "2048",
@@ -22,9 +21,7 @@
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
-        "{{user `iso_path` }}/{{user `iso_name`}}",
-        "D:/ISO/{{user `iso_name`}}",
-        "http://mirror.sov.uk.goscomb.net/centos/8.1.1911/isos/x86_64/{{user `iso_name`}}"
+        "http://mirrors.melbourne.co.uk/centos/8.1.1911/isos/x86_64/{{user `iso_name`}}"
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
@@ -52,7 +49,6 @@
         "../provisioners/ssh-keys.sh",
         "../provisioners/tools8.sh",
         "../provisioners/update.sh",
-        "../provisioners/vmtools.sh",
         "../provisioners/disk_cleanup.sh",
         "../provisioners/cleanup.sh"
       ],

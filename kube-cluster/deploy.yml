@@ -1,7 +1,0 @@
----
-- import_playbook: update-etc-hosts.yml
-- import_playbook: disable-firewall.yml
-- import_playbook: kube-dependencies.yml
-- import_playbook: master.yml
-- import_playbook: workers.yml
-- import_playbook: kube-firewall-ports.yml
