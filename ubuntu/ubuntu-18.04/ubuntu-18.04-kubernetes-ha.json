@@ -26,7 +26,12 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
         "{{user `iso_path` }}\/{{user `iso_name`}}",
+<<<<<<< HEAD
         "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
+=======
+        "E:/ISO/{{user `iso_name`}}",
+        "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.4-server-amd64.iso"
+>>>>>>> master
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
@@ -78,7 +83,12 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
         "{{user `iso_path` }}\/{{user `iso_name`}}",
+<<<<<<< HEAD
         "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
+=======
+        "E:/ISO/{{user `iso_name`}}",
+        "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.4-server-amd64.iso"
+>>>>>>> master
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
@@ -130,7 +140,12 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
         "{{user `iso_path` }}\/{{user `iso_name`}}",
+<<<<<<< HEAD
         "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
+=======
+        "E:/ISO/{{user `iso_name`}}",
+        "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.4-server-amd64.iso"
+>>>>>>> master
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
@@ -182,7 +197,12 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
         "{{user `iso_path` }}\/{{user `iso_name`}}",
+<<<<<<< HEAD
         "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
+=======
+        "E:/ISO/{{user `iso_name`}}",
+        "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.4-server-amd64.iso"
+>>>>>>> master
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
@@ -234,7 +254,12 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
         "{{user `iso_path` }}\/{{user `iso_name`}}",
+<<<<<<< HEAD
         "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
+=======
+        "E:/ISO/{{user `iso_name`}}",
+        "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.4-server-amd64.iso"
+>>>>>>> master
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
@@ -286,7 +311,12 @@
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "iso_urls": [
         "{{user `iso_path` }}\/{{user `iso_name`}}",
+<<<<<<< HEAD
         "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
+=======
+        "E:/ISO/{{user `iso_name`}}",
+        "http://cdimage.ubuntu.com/ubuntu/releases/18.04/release/ubuntu-18.04.4-server-amd64.iso"
+>>>>>>> master
       ],
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
