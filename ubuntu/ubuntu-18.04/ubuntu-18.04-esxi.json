@@ -1,0 +1,122 @@
+{
+  "variables": {
+    "iso_name": "ubuntu-18.04.4-server-amd64.iso",
+    "iso_checksum": "E2ECDACE33C939527CBC9E8D23576381C493B071107207D2040AF72595F8990B",
+    "iso_checksum_type": "sha256",
+    "ssh_name": "deploy",
+    "ssh_pass": "deploy",
+    "vm_name": "Ubuntu1804-template",
+    "preseed": "ubuntu-server.seed",
+    "num_cpus": "2",
+    "mem_size": "4096",
+    "disk_size": "20480",
+    "linux": "/install/linux",
+    "initrd": "/install/initrd.gz",
+
+    "vcenter_server":"vcenter",
+    "username":"administrator@vsphere.local",
+    "password":"VMware123!",
+    "datastore":"vsanDatastore",
+    "folder": "Templates",
+    "host":"esxihost",
+    "cluster": "workercluster",
+    "network": "VM Network"
+  },
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "http_directory": "../http",
+
+      "vcenter_server":      "{{user `vcenter_server`}}",
+      "username":            "{{user `username`}}",
+      "password":            "{{user `password`}}",
+      "insecure_connection": "true",
+
+      "vm_name": "{{user `vm_name`}}",
+      "datastore": "{{user `datastore`}}",
+      "folder": "{{user `folder`}}",
+      "host":     "{{user `host`}}",
+      "convert_to_template": "true",
+      "cluster": "{{user `cluster`}}",
+      "network": "{{user `network`}}",
+      "boot_order": "disk,cdrom",
+
+      "guest_os_type": "ubuntu64Guest",
+
+      "ssh_username": "{{user `ssh_name`}}",
+      "ssh_password": "{{user `ssh_pass`}}",
+
+      "CPUs": "{{user `num_cpus`}}",
+      "RAM": "{{user `mem_size`}}",
+
+      "disk_controller_type":  "pvscsi",
+      "disk_size": "{{user `disk_size`}}",
+      "disk_thin_provisioned": true,
+
+      "network_card": "vmxnet3",
+
+      "iso_urls": [
+        "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
+      ],
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+
+      "floppy_files": [
+        "./preseed.cfg"
+      ],
+      "boot_command": [
+        "<esc><f6><esc>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+        "<bs><bs><bs>",
+        "{{user `linux`}} ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `preseed`}} ",
+        "debian-installer=en_GB auto=true locale=en_GB kbd-chooser/method=uk ",
+        "console-setup/ask_detect=false keyboard-configuration/layoutcode=uk ",
+        "hostname={{build_name}} ",
+        "initrd={{user `initrd`}} quiet --- <enter>"
+      ]
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "../provisioners/base.sh",
+        "../provisioners/ssh-keys.sh",
+        "../provisioners/deploy.sh",
+        "../provisioners/hosts.sh",
+        "../provisioners/vmware-server.sh"
+      ],
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/disk_cleanup.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/outputs.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    },
+    {
+      "type": "file",
+      "source": "/home/{{user `ssh_name`}}/serverinfo-{{build_name}}.txt",
+      "destination": "./output/serverinfo-{{build_name}}.txt",
+      "direction": "download"
+    },
+    {
+      "type": "shell",
+      "script": "../provisioners/cleanup.sh",
+      "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
+    }
+  ],
+  "post-processors": []
+}
