@@ -20,12 +20,14 @@
     "folder": "Templates",
     "host":"esxihost",
     "cluster": "workercluster",
-    "network": "VM Network"
+    "network": "VM Network",
+    "http_directory": "../http"
   },
   "builders": [
     {
       "type": "vsphere-iso",
-      "http_directory": "../http",
+      "name": "{{user `vm_name`}}",
+      "boot_wait": "20s",
 
       "vcenter_server":      "{{user `vcenter_server`}}",
       "username":            "{{user `username`}}",
@@ -38,34 +40,41 @@
       "host":     "{{user `host`}}",
       "convert_to_template": "true",
       "cluster": "{{user `cluster`}}",
-      "network": "{{user `network`}}",
+      "network_adapters": [
+        {
+          "network": "{{user `network`}}",
+          "network_card": "vmxnet3"
+        }
+      ],
       "boot_order": "disk,cdrom",
 
       "guest_os_type": "ubuntu64Guest",
 
       "ssh_username": "{{user `ssh_name`}}",
       "ssh_password": "{{user `ssh_pass`}}",
+      "ssh_port": 22,
+      "ssh_timeout": "10000s",
 
       "CPUs": "{{user `num_cpus`}}",
       "RAM": "{{user `mem_size`}}",
 
       "disk_controller_type":  "pvscsi",
-      "disk_size": "{{user `disk_size`}}",
-      "disk_thin_provisioned": true,
-
-      "network_card": "vmxnet3",
-
+      "storage": [
+        {
+          "disk_size": "{{user `disk_size`}}",
+          "disk_thin_provisioned": true
+        }
+      ],
       "iso_urls": [
         "http://cdimage.ubuntu.com/releases/18.04.4/release/{{user `iso_name`}}"
       ],
-      "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "{{user `iso_checksum_type`}}",
-
+      "iso_checksum": "{{user `iso_checksum_type`}}:{{user `iso_checksum`}}",
       "floppy_files": [
-        "./preseed.cfg"
+        "{{user `http_directory`}}/{{user `preseed`}}"
       ],
+
       "boot_command": [
-        "<esc><f6><esc>",
+        "<enter><wait><f6><wait><esc><wait>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
@@ -76,10 +85,10 @@
         "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
         "<bs><bs><bs>",
         "{{user `linux`}} ",
-        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/{{user `preseed`}} ",
+        "file=/media/{{user `preseed`}} ",
         "debian-installer=en_GB auto=true locale=en_GB kbd-chooser/method=uk ",
         "console-setup/ask_detect=false keyboard-configuration/layoutcode=uk ",
-        "hostname={{build_name}} ",
+        "hostname={{user `vm_name`}} ",
         "initrd={{user `initrd`}} quiet --- <enter>"
       ]
     }
@@ -105,12 +114,6 @@
       "type": "shell",
       "script": "../provisioners/outputs.sh",
       "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
-    },
-    {
-      "type": "file",
-      "source": "/home/{{user `ssh_name`}}/serverinfo-{{build_name}}.txt",
-      "destination": "./output/serverinfo-{{build_name}}.txt",
-      "direction": "download"
     },
     {
       "type": "shell",

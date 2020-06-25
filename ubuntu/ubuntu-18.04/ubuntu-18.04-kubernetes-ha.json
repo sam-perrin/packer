@@ -365,7 +365,7 @@
         "../provisioners/base.sh",
         "../provisioners/ssh-keys.sh",
         "../provisioners/deploy.sh",
-        "../provisioners/hosts.sh",
+        "../provisioners/hosts-k8s.sh",
         "../provisioners/vmware-server.sh"
       ],
       "execute_command": "echo 'deploy' | {{.Vars}} sudo -E -S sh -ex '{{.Path}}'"
