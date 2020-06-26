@@ -74,7 +74,8 @@
             "scripts": [
                 "../provisioners/base-7.sh",
                 "../provisioners/kernel_stuff.sh",
-                "../provisioners/tools.sh"
+                "../provisioners/tools.sh",
+                "../provisioners/users.sh"
             ],
             "environment_vars": [
                 "EPEL_RELEASE=epel-release"
