@@ -99,6 +99,7 @@
       "scripts": [
         "../provisioners/base.sh",
         "../provisioners/ssh-keys.sh",
+        "../provisioners/netplan-fix.sh",
         "../provisioners/deploy.sh",
         "../provisioners/hosts.sh",
         "../provisioners/vmware-server.sh"
