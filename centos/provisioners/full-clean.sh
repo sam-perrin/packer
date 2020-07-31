@@ -25,8 +25,8 @@ echo "==> Cleaning up tmp"
 /bin/rm -rf /tmp/*
 /bin/rm -rf /var/tmp/*
 
-echo "==> Remove the SSH host keys"
-/bin/rm -f /etc/ssh/*key*
+#echo "==> Remove the SSH host keys"
+#/bin/rm -f /etc/ssh/*key*
 
 echo "==> Remove the root user’s shell history"
 /bin/rm -f ~root/.bash_history
