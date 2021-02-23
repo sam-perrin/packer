@@ -114,11 +114,17 @@ variable "iso_checksum" {
 
 # HTTP Endpoint for Kickstart
 
-variable "http_directory" {
-  type    = string
-  description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/centos-server/)"
+variable "http_server" {
+  type = string
+  description = "Remote URL to retrieve configuration file"
   default = ""
 }
+
+# variable "http_directory" {
+#   type    = string
+#   description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/centos-server/)"
+#   default = ""
+# }
 
 variable "http_file" {
   type    = string
@@ -271,10 +277,9 @@ source "vsphere-iso" "linux-centos-server" {
   }
   iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum             = "sha512:var.iso_checksum"
-  http_directory           = var.http_directory
   boot_order               = "disk,cdrom"
   boot_wait                = var.vm_boot_wait
-  boot_command             = ["<tab>","text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/${var.http_file}","<enter><wait>"]
+  boot_command             = ["<tab>","text ks=${var.http_server}/${var.http_file}","<enter><wait>"]
   ip_wait_timeout          = "20m"
   ssh_password             = var.build_password
   ssh_username             = var.build_username
