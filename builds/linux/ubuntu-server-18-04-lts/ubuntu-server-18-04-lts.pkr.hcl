@@ -279,7 +279,7 @@ source "vsphere-iso" "linux-ubuntu-server" {
   iso_checksum              = "sha512:var.iso_checksum"
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
-  floppy_files              = var.vm_floppy_files_ubuntu1804,
+  floppy_files              = var.vm_floppy_files_ubuntu1804
   boot_command              = [
     "<enter><wait><f6><wait><esc><wait>",
     "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
