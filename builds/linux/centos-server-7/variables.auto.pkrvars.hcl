@@ -7,7 +7,7 @@
 
 # HTTP Endpoint for Kickstart
 
-http_directory = "../../../configs/linux/centos-server"
+#http_directory = "../../../configs/linux/centos-server"
 http_file      = "ks-v7.cfg"
 
 # Virtual Machine Settings

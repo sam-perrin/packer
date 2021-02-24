@@ -7,7 +7,7 @@
 
 # HTTP Kickstart Settings 
 
-http_directory = "../../../configs/linux/redhat-server"
+#http_directory = "../../../configs/linux/redhat-server"
 http_file      = "ks-v8.cfg"
 
 # Virtual Machine Settings

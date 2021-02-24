@@ -114,11 +114,17 @@ variable "iso_checksum" {
 
 # HTTP Endpoint for Kickstart
 
-variable "http_directory" {
-  type    = string
-  description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/centos-server/)"
+variable "http_server" {
+  type = string
+  description = "Remote URL to retrieve configuration file"
   default = ""
 }
+
+#variable "http_directory" {
+#  type    = string
+#  description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/centos-server/)"
+#  default = ""
+#}
 
 variable "http_file" {
   type    = string

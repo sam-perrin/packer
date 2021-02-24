@@ -7,7 +7,7 @@
 
 # HTTP Kickstart Settings
 
-http_directory = "../../../configs/linux/photon-server"
+#http_directory = "../../../configs/linux/photon-server"
 http_file      = "ks.json"
 
 # Virtual Machine Settings

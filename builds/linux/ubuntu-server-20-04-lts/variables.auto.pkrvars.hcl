@@ -7,7 +7,7 @@
 
 # HTTP Kickstart Settings
 
-http_directory = "../../../configs/linux/ubuntu-server"
+#http_directory = "../../../configs/linux/ubuntu-server"
 
 # Virtual Machine Settings
 

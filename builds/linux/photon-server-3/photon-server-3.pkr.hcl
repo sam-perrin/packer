@@ -114,11 +114,17 @@ variable "iso_checksum" {
 
 # HTTP Endpoint for Kickstart
 
-variable "http_directory" {
-  type    = string
-  description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/photon-server/)"
+variable "http_server" {
+  type = string
+  description = "Remote URL to retrieve configuration file"
   default = ""
 }
+
+#variable "http_directory" {
+#  type    = string
+#  description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/photon-server/)"
+#  default = ""
+#}
 
 variable "http_file" {
   type    = string
@@ -274,7 +280,7 @@ source "vsphere-iso" "linux-photon-server" {
   http_directory           = var.http_directory
   boot_order               = "disk,cdrom"
   boot_wait                = var.vm_boot_wait
-  boot_command             = ["<esc><wait> vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/${var.http_file} photon.media=cdrom <enter>"]
+  boot_command             = ["<esc><wait> vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=${var.http_server}/${var.http_file} photon.media=cdrom <enter>"]
   ip_wait_timeout          = "20m"
   ssh_username             = var.build_username
   ssh_password             = var.build_password

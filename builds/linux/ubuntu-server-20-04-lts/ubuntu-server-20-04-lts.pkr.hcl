@@ -114,11 +114,17 @@ variable "iso_checksum" {
 
 # HTTP Endpoint for Kickstart
 
-variable "http_directory" {
-  type    = string
-  description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/ubuntu-server/)"
+variable "http_server" {
+  type = string
+  description = "Remote URL to retrieve configuration file"
   default = ""
 }
+
+#variable "http_directory" {
+#  type    = string
+#  description = "The HTTP endpoint directory path. (e.g. ../../../configs/linux/ubuntu-server/)"
+#  default = ""
+#}
 
 # Virtual Machine Settings
 
@@ -268,7 +274,7 @@ source "vsphere-iso" "linux-ubuntu-server" {
   http_directory            = var.http_directory
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
-  boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ds=nocloud-net;s=http://{{.HTTPIP}}:{{.HTTPPort}}/ ","<enter><wait>"]
+  boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ds=nocloud-net;s=${var.http_server}/ ","<enter><wait>"]
   ip_wait_timeout           = "20m"
   ssh_password              = var.build_password
   ssh_username              = var.build_username
