@@ -206,6 +206,12 @@ variable "vm_disk_size" {
   default = 40960
 }
 
+variable "vm_floppy_files_ubuntu1804" {
+  type    = list(string)
+  description = "Alternate method for providing Kickstart file"
+  default = []
+}
+
 variable "vm_disk_controller_type" {
   type    = list(string)
   description = "The virtual disk controller types in sequence. (e.g. 'pvscsi')"
