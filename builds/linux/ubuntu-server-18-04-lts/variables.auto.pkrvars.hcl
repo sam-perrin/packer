@@ -27,6 +27,9 @@ vm_disk_size                = 40960
 vm_disk_controller_type     = ["pvscsi"]
 vm_network_card             = "vmxnet3"
 vm_boot_wait                = "2s"
+vm_floppy_files_ubuntu1804 = [
+  "../../../configs/linux/ubuntu-server/ks.cfg",
+]
 
 # ISO Objects
 

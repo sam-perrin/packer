@@ -279,6 +279,7 @@ source "vsphere-iso" "linux-ubuntu-server" {
   iso_checksum              = "sha512:var.iso_checksum"
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
+  floppy_files              = var.vm_floppy_files_ubuntu1804,
   boot_command              = [
     "<enter><wait><f6><wait><esc><wait>",
     "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
@@ -296,7 +297,7 @@ source "vsphere-iso" "linux-ubuntu-server" {
     " locale=en_US",
     " interface=auto",
     " netcfg/dhcp_timeout=120",
-    " url=${var.http_server}/${var.http_file}<wait>",
+    " file=/media/ks.cfg<wait>",
     "<enter>"
   ]
   ip_wait_timeout           = "20m"
