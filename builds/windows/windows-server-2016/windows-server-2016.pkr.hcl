@@ -315,7 +315,7 @@ source "vsphere-iso" "windows-server-standard-dexp" {
   winrm_username            = var.build_username
   winrm_password            = var.build_password
   winrm_port                = "5985"
-  winrm_timeout             = "12h"
+  winrm_timeout             = "30m"
   shutdown_command          = var.vm_shutdown_command
   shutdown_timeout          = "15m"
   /*
