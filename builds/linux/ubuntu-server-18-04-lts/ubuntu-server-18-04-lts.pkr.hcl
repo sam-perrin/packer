@@ -294,7 +294,9 @@ source "vsphere-iso" "linux-ubuntu-server" {
     " initrd=/install/initrd.gz",
     " priority=critical",
     " locale=en_US",
-    " preseed/url=${var.http_server}/${var.http_file}<wait>",
+    " interface=auto",
+    " netcfg/dhcp_timeout=120",
+    " url=${var.http_server}/${var.http_file}<wait>",
     "<enter>"
   ]
   ip_wait_timeout           = "20m"

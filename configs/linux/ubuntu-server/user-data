@@ -13,8 +13,8 @@ autoinstall:
       name: lvm
   identity:
     hostname: ubuntu-server
-    username: rainpole
-    password: '$6$jqoxlQyW2ROxsLK4$P3gGp2Bf0FCSLAZTNaE/LZBqSsvVAYZNPNwTehXZbMAhRJdKOjNqqyUWVUTwql9CnhHUlpiluWzHlR2DpUKD4/'
+    username: build
+    password: '$6$L.INFHnc1oig3h8e$wb.zCa5MeXmxt9GDSr/mWcinwYlJEm4N4YKOsOdQlF3ZOcVi8pTEhSpNunPyPO0Afnw.4PrSslB/vhy8ncQZw0'
   network:
     network:
       version: 2
@@ -23,7 +23,7 @@ autoinstall:
   ssh:
     install-server: true
     authorized-keys:
-      - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADwXV3rbRCWwhSr6aMkHukV5O7OGAEyUtAerj2anJHm3mwbOxlBU/uO4f0ELqo2GJcTALMC0aFrbvu9qonIH5VF7wBBfCP1cS5B92sUagVV9ldI/uo89e/7dVYC9maPsFaZq2G0/PLU0hZKOohq99Oxc2RMSiJaaenX/hNqx5xYSaK+CA== code@rainpole.io
+      - ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBADwXV3rbRCWwhSr6aMkHukV5O7OGAEyUtAerj2anJHm3mwbOxlBU/uO4f0ELqo2GJcTALMC0aFrbvu9qonIH5VF7wBBfCP1cS5B92sUagVV9ldI/uo89e/7dVYC9maPsFaZq2G0/PLU0hZKOohq99Oxc2RMSiJaaenX/hNqx5xYSaK+CA==
     allow-pw: true
   packages:
     - openssh-server
@@ -35,7 +35,7 @@ autoinstall:
     package_reboot_if_required: true
   late-commands:
     - 'sed -i "s/dhcp4: true/&\n      dhcp-identifier: mac/" /target/etc/netplan/00-installer-config.yaml'
-    - echo 'rainpole ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/rainpole
-    - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/rainpole
+    - echo 'build ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/build
+    - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/build
     - curtin in-target --target=/target -- apt-get update
     - curtin in-target --target=/target -- apt-get upgrade --yes
