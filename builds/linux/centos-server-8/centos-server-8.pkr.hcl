@@ -279,7 +279,7 @@ source "vsphere-iso" "linux-centos-server" {
   iso_checksum             = "sha512:var.iso_checksum"
   boot_order               = "disk,cdrom"
   boot_wait                = var.vm_boot_wait
-  boot_command             = ["<tab>","text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/${var.http_file}","<enter><wait>"]
+  boot_command             = ["<tab>","text ks=${var.http_server}/${var.http_file}","<enter><wait>"]
   ip_wait_timeout          = "20m"
   ssh_password             = var.build_password
   ssh_username             = var.build_username

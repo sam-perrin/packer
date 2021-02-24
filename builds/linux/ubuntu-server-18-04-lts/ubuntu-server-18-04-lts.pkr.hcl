@@ -279,7 +279,24 @@ source "vsphere-iso" "linux-ubuntu-server" {
   iso_checksum              = "sha512:var.iso_checksum"
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
-  boot_command              = ["<enter><wait><f6><wait><esc><wait>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs>", "/install/vmlinuz", " initrd=/install/initrd.gz", " priority=critical", " locale=en_US", " url=${var.http_server}/${var.http_file}", "<enter>"]
+  boot_command              = [
+    "<enter><wait><f6><wait><esc><wait>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>",
+    "<bs><bs><bs>",
+    "/install/vmlinuz",
+    " initrd=/install/initrd.gz",
+    " priority=critical",
+    " locale=en_US",
+    " preseed/url=${var.http_server}/${var.http_file}<wait>",
+    "<enter>"
+  ]
   ip_wait_timeout           = "20m"
   ssh_password              = var.build_password
   ssh_username              = var.build_username
