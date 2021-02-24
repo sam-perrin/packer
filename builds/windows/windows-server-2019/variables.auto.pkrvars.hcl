@@ -27,25 +27,25 @@ vm_network_card             = "vmxnet3"
 vm_floppy_files_server_std_dexp = [
   "../../../configs/windows/windows-server-2019/standard/bios/autounattend.xml",
   "../../../scripts/windows/",
-  "../../../drivers/windows",
+  "../../../drivers/windows/",
   "../../../certificates/"
   ]
 vm_floppy_files_server_std_core = [
   "../../../configs/windows/windows-server-2019/standard-core/bios/autounattend.xml",
   "../../../scripts/windows/",
-  "../../../drivers/windows",
+  "../../../drivers/windows/pvscsi/",
   "../../../certificates/"
 ]
 vm_floppy_files_server_dc_dexp = [
   "../../../configs/windows/windows-server-2019/datacenter/bios/autounattend.xml",
   "../../../scripts/windows/",
-  "../../../drivers/windows",
+  "../../../drivers/windows/pvscsi/",
   "../../../certificates/"
   ]
 vm_floppy_files_server_dc_core = [
   "../../../configs/windows/windows-server-2019/datacenter-core/bios/autounattend.xml",
   "../../../scripts/windows/",
-  "../../../drivers/windows",
+  "../../../drivers/windows/pvscsi/",
   "../../../certificates/"
   ]
 vm_shutdown_command = "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\""
