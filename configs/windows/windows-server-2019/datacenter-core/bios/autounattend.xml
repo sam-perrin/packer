@@ -68,8 +68,8 @@
          </ImageInstall>
          <UserData>
             <AcceptEula>true</AcceptEula>
-            <FullName>Rainpole</FullName>
-            <Organization>Rainpole</Organization>
+            <FullName>Build</FullName>
+            <Organization>Xtravirt</Organization>
             <ProductKey>
                <Key>WMDGN-G9PQG-XVVXX-R3X43-63DFG</Key>
                <WillShowUI>OnError</WillShowUI>
@@ -111,11 +111,11 @@
       <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
          <AutoLogon>
             <Password>
-               <Value>R@in!$aG00dThing.</Value>
+               <Value>hiwn8shar4zool@FAIR</Value>
                <PlainText>true</PlainText>
             </Password>
             <Enabled>true</Enabled>
-            <Username>rainpole</Username>
+            <Username>build</Username>
          </AutoLogon>
          <OOBE>
             <HideEULAPage>true</HideEULAPage>
@@ -128,19 +128,19 @@
          </OOBE>
          <UserAccounts>
             <AdministratorPassword>
-               <Value>R@in!$aG00dThing.</Value>
+               <Value>hiwn8shar4zool@FAIR</Value>
                <PlainText>true</PlainText>
             </AdministratorPassword>
             <LocalAccounts>
                <LocalAccount wcm:action="add">
                   <Password>
-                     <Value>R@in!$aG00dThing.</Value>
+                     <Value>hiwn8shar4zool@FAIR</Value>
                      <PlainText>true</PlainText>
                   </Password>
                   <Group>administrators</Group>
-                  <DisplayName>Rainpole</DisplayName>
-                  <Name>rainpole</Name>
-                  <Description>Build Account by Rainpole</Description>
+                  <DisplayName>Build</DisplayName>
+                  <Name>build</Name>
+                  <Description>Build Account by Xtravirt</Description>
                </LocalAccount>
             </LocalAccounts>
          </UserAccounts>
