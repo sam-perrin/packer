@@ -277,7 +277,6 @@ source "vsphere-iso" "linux-ubuntu-server" {
   }
   iso_paths                 = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum              = "sha512:var.iso_checksum"
-  http_directory            = var.http_directory
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
   boot_command              = ["<enter><wait><f6><wait><esc><wait>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs><bs><bs><bs><bs><bs><bs><bs>", "<bs><bs><bs>", "/install/vmlinuz", " initrd=/install/initrd.gz", " priority=critical", " locale=en_US", " url=${var.http_server}/${var.http_file}", "<enter>"]

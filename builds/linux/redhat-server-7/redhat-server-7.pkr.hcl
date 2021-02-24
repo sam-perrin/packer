@@ -291,7 +291,6 @@ source "vsphere-iso" "linux-redhat-server" {
   }
   iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum             = "sha512:var.iso_checksum"
-  http_directory           = var.http_directory
   boot_order               = "disk,cdrom"
   boot_wait                = var.vm_boot_wait
   boot_command             = ["<tab>","text ks=${var.http_server}/${var.http_file}","<enter><wait>"]

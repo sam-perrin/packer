@@ -271,7 +271,6 @@ source "vsphere-iso" "linux-ubuntu-server" {
   }
   iso_paths                 = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum              = "sha512:var.iso_checksum"
-  http_directory            = var.http_directory
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
   boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ds=nocloud-net;s=${var.http_server}/ ","<enter><wait>"]
