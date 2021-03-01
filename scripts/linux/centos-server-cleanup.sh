@@ -59,14 +59,14 @@ sudo sed -i "s/\(^.*10d.*$\)/#\1/" /usr/lib/tmpfiles.d/tmp.conf
 echo '> Adding After=dbus.service to VMware Tools daemon ...'
 sudo sed -i '/^After=vgauthd.service/a\After=dbus.service' /usr/lib/systemd/system/vmtoolsd.service
 
-### Disable VMware Customisation ### 
-echo '> Disabling VMware Customisation...'
-sudo sed -i '/^disable_vmware_customization:/s/false/true/' /etc/cloud/cloud.cfg
-sudo tee -a /etc/cloud/cloud.cfg > /dev/null <<EOT
-network:
-  config: disabled
-EOT
-vmware-toolbox-cmd config set deployPkg enable-custom-scripts true
+# ### Disable VMware Customisation ### 
+# echo '> Disabling VMware Customisation...'
+# sudo sed -i '/^disable_vmware_customization:/s/false/true/' /etc/cloud/cloud.cfg
+# sudo tee -a /etc/cloud/cloud.cfg > /dev/null <<EOT
+# network: { config: “disabled” }
+# EOT
+# # sudo yum install https://github.com/vmware/cloud-init-vmware-guestinfo/releases/download/v1.1.0/cloud-init-vmware-guestinfo-1.1.0-1.el7.noarch.rpm
+# # sudo vmware-toolbox-cmd config set deployPkg enable-custom-scripts true
 
 ### Clean Cloud-Init. ### 
 echo '> Cleaning Cloud-Init...'
