@@ -21,32 +21,32 @@ sudo yum install -y cloud-init
 echo '> Clearing yum cache ...'
 sudo yum clean all
 
-### Copy the Certificate Authority certificates and add to the certificate authority trust. ###
-echo '> Copying the Certificate Authority certificates and adding to the certificate authority trust ...'
-sudo chown -R root:root /tmp/root-ca.crt
-sudo cat /tmp/root-ca.crt > /etc/pki/ca-trust/source/anchors/root-ca.crt
-sudo chmod 644 /etc/pki/ca-trust/source/anchors/root-ca.crt
-sudo update-ca-trust extract
-sudo rm -rf /tmp/root-ca.crt
+# ### Copy the Certificate Authority certificates and add to the certificate authority trust. ###
+# echo '> Copying the Certificate Authority certificates and adding to the certificate authority trust ...'
+# sudo chown -R root:root /tmp/root-ca.crt
+# sudo cat /tmp/root-ca.crt > /etc/pki/ca-trust/source/anchors/root-ca.crt
+# sudo chmod 644 /etc/pki/ca-trust/source/anchors/root-ca.crt
+# sudo update-ca-trust extract
+# sudo rm -rf /tmp/root-ca.crt
 
-### Copy the SSH key to authorized_keys and set permissions. ###
-echo '> Copying the SSH key to Authorized Keys and setting permissions ...'
-sudo mkdir -p /home/$BUILD_USERNAME/.ssh
-sudo chmod 700 /home/$BUILD_USERNAME/.ssh
-sudo cat /tmp/id_ecdsa.pub > /home/$BUILD_USERNAME/.ssh/authorized_keys
-sudo chmod 644 /home/$BUILD_USERNAME/.ssh/authorized_keys
-sudo chown -R $BUILD_USERNAME /home/$BUILD_USERNAME/.ssh
-sudo rm -rf /tmp/id_ecdsa.pub
+# ### Copy the SSH key to authorized_keys and set permissions. ###
+# echo '> Copying the SSH key to Authorized Keys and setting permissions ...'
+# sudo mkdir -p /home/$BUILD_USERNAME/.ssh
+# sudo chmod 700 /home/$BUILD_USERNAME/.ssh
+# sudo cat /tmp/id_ecdsa.pub > /home/$BUILD_USERNAME/.ssh/authorized_keys
+# sudo chmod 644 /home/$BUILD_USERNAME/.ssh/authorized_keys
+# sudo chown -R $BUILD_USERNAME /home/$BUILD_USERNAME/.ssh
+# sudo rm -rf /tmp/id_ecdsa.pub
 
-### Configure SSH for Public Key Authentication. ###
-echo '> Configuring SSH for Public Key Authentication ...'
-sudo sed -i '/^PermitRootLogin/s/yes/no/' /etc/ssh/sshd_config
-sudo sed -i "s/.*PubkeyAuthentication.*/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
-sudo sed -i '/^PasswordAuthentication/s/no/yes/' /etc/ssh/sshd_config
+# ### Configure SSH for Public Key Authentication. ###
+# echo '> Configuring SSH for Public Key Authentication ...'
+# sudo sed -i '/^PermitRootLogin/s/yes/no/' /etc/ssh/sshd_config
+# sudo sed -i "s/.*PubkeyAuthentication.*/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
+# sudo sed -i '/^PasswordAuthentication/s/no/yes/' /etc/ssh/sshd_config
 
-### Restart the SSH daemon. ###
-echo '> Restarting the SSH daemon. ...'
-sudo systemctl restart sshd
+# ### Restart the SSH daemon. ###
+# echo '> Restarting the SSH daemon. ...'
+# sudo systemctl restart sshd
 
 ### Disable and clean tmp. ### 
 echo '> Disabling and clean tmp ...'
@@ -59,14 +59,14 @@ sudo sed -i "s/\(^.*10d.*$\)/#\1/" /usr/lib/tmpfiles.d/tmp.conf
 echo '> Adding After=dbus.service to VMware Tools daemon ...'
 sudo sed -i '/^After=vgauthd.service/a\After=dbus.service' /usr/lib/systemd/system/vmtoolsd.service
 
-# ### Disable VMware Customisation ### 
-# echo '> Disabling VMware Customisation...'
-# sudo sed -i '/^disable_vmware_customization:/s/false/true/' /etc/cloud/cloud.cfg
-# sudo tee -a /etc/cloud/cloud.cfg > /dev/null <<EOT
-# network: { config: “disabled” }
-# EOT
-# # sudo yum install https://github.com/vmware/cloud-init-vmware-guestinfo/releases/download/v1.1.0/cloud-init-vmware-guestinfo-1.1.0-1.el7.noarch.rpm
-# # sudo vmware-toolbox-cmd config set deployPkg enable-custom-scripts true
+### Disable VMware Customisation ### 
+echo '> Disabling VMware Customisation...'
+sudo sed -i '/^disable_vmware_customization:/s/false/true/' /etc/cloud/cloud.cfg
+sudo tee -a /etc/cloud/cloud.cfg > /dev/null <<EOT
+network: { config: “disabled” }
+EOT
+# sudo yum install https://github.com/vmware/cloud-init-vmware-guestinfo/releases/download/v1.1.0/cloud-init-vmware-guestinfo-1.1.0-1.el7.noarch.rpm
+# sudo vmware-toolbox-cmd config set deployPkg enable-custom-scripts true
 
 ### Clean Cloud-Init. ### 
 echo '> Cleaning Cloud-Init...'
