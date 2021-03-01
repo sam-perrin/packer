@@ -53,6 +53,7 @@ sudo rm -rf /tmp/id_ecdsa.pub
 echo '> Configuring SSH for Public Key Authentication ...'
 sudo sed -i '/^PermitRootLogin/s/yes/no/' /etc/ssh/sshd_config
 sudo sed -i "s/.*PubkeyAuthentication.*/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
+sudo sed -i '/^PasswordAuthentication/s/no/yes/' /etc/ssh/sshd_config
 
 ### Disable and clean tmp. ### 
 echo '> Disabling and clean tmp ...'
@@ -61,6 +62,14 @@ sudo sed -i 's/D/#&/' /usr/lib/tmpfiles.d/tmp.conf
 ### Add After=dbus.service to VMware Tools daemon. ### 
 echo '> Adding After=dbus.service to VMware Tools daemon ...'
 sudo sed -i '/^After=vgauthd.service/a\After=dbus.service' /usr/lib/systemd/system/vmtoolsd.service
+
+### Disable VMware Customisation ### 
+echo '> Disabling VMware Customisation...'
+sudo sed -i '/^disable_vmware_customization:/s/false/true/' /etc/cloud/cloud.cfg
+sudo tee -a /etc/cloud/cloud.cfg > /dev/null <<EOT
+network:
+  # config: disabled
+EOT
 
 ### Clean Cloud-Init. ### 
 echo '> Cleaning Cloud-Init...'
