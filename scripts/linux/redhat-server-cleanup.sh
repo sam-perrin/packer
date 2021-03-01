@@ -22,6 +22,7 @@ sudo yum install -y git
 sudo yum install -y net-tools
 sudo yum install -y unzip
 sudo yum install -y ca-certificates
+sudo yum install -y perl
 sudo yum install -y cloud-init
 
 ### Clearing yum cache. ###
@@ -68,6 +69,10 @@ sudo sed -i "s/\(^.*10d.*$\)/#\1/" /usr/lib/tmpfiles.d/tmp.conf
 ### Add After=dbus.service to VMware Tools daemon. ### 
 echo '> Adding After=dbus.service to VMware Tools daemon ...'
 sudo sed -i '/^After=vgauthd.service/a\After=dbus.service' /usr/lib/systemd/system/vmtoolsd.service
+
+### Clean Cloud-Init. ### 
+echo '> Cleaning Cloud-Init...'
+sudo cloud-init clean
 
 ### Create a cleanup script. ###
 echo '> Creating cleanup script ...'

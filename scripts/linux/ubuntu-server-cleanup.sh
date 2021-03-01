@@ -15,6 +15,7 @@ sudo apt-get install -y git
 sudo apt-get install -y net-tools
 sudo apt-get install -y unzip
 sudo apt-get install -y ca-certificates
+sudo apt-get install -y perl
 sudo apt-get install -y cloud-init
 
 ### Clearing apt-get cache. ###
@@ -54,6 +55,10 @@ sudo sed -i 's/D/#&/' /usr/lib/tmpfiles.d/tmp.conf
 ### Add After=dbus.service to open-vm-tools. ### 
 echo '> Adding After=dbus.service to open-vm-tools ...'
 sudo sed -i '/^After=vgauthd.service/a\After=dbus.service' /lib/systemd/system/open-vm-tools.service
+
+### Clean Cloud-Init. ### 
+echo '> Cleaning Cloud-Init...'
+sudo cloud-init clean
 
 ### Create a cleanup script. ###
 echo '> Creating cleanup script ...'

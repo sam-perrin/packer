@@ -23,6 +23,7 @@ sudo tdnf install -y net-tools
 sudo tdnf install -y unzip
 sudo tdnf install -y ca-certificates
 sudo tdnf install -y openssl-c_rehash
+sudo tdnf install -y perl
 sudo tdnf install -y cloud-init
 
 ### Clearing tdnf cache. ###
@@ -60,6 +61,10 @@ sudo sed -i 's/D/#&/' /usr/lib/tmpfiles.d/tmp.conf
 ### Add After=dbus.service to VMware Tools daemon. ### 
 echo '> Adding After=dbus.service to VMware Tools daemon ...'
 sudo sed -i '/^After=vgauthd.service/a\After=dbus.service' /usr/lib/systemd/system/vmtoolsd.service
+
+### Clean Cloud-Init. ### 
+echo '> Cleaning Cloud-Init...'
+sudo cloud-init clean
 
 ### Create a cleanup script. ###
 echo '> Creating cleanup script ...'
