@@ -252,7 +252,6 @@ source "vsphere-iso" "linux-photon-server" {
   folder               = var.vcenter_folder
   insecure_connection  = var.vcenter_insecure_connection
   tools_upgrade_policy = true
-  remove_cdrom         = true
   convert_to_template  = true
   guest_os_type        = var.vm_guest_os_type
   vm_version           = var.vm_version
