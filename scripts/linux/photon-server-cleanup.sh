@@ -23,6 +23,7 @@ sudo tdnf install -y net-tools
 sudo tdnf install -y unzip
 sudo tdnf install -y ca-certificates
 sudo tdnf install -y openssl-c_rehash
+sudo tdnf install -y cloud-init
 
 ### Clearing tdnf cache. ###
 echo '> Clearing tdnf cache ...'

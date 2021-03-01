@@ -14,6 +14,7 @@ sudo yum install -y git
 sudo yum install -y net-tools
 sudo yum install -y unzip
 sudo yum install -y ca-certificates
+sudo yum install -y cloud-init
 
 ### Clearing yum cache. ###
 echo '> Clearing yum cache ...'

@@ -15,6 +15,7 @@ sudo apt-get install -y git
 sudo apt-get install -y net-tools
 sudo apt-get install -y unzip
 sudo apt-get install -y ca-certificates
+sudo apt-get install -y cloud-init
 
 ### Clearing apt-get cache. ###
 echo '> Clearing apt-get cache ...'
