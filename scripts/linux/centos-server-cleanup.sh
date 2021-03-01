@@ -64,7 +64,7 @@ echo '> Disabling VMware Customisation...'
 sudo sed -i '/^disable_vmware_customization:/s/false/true/' /etc/cloud/cloud.cfg
 sudo tee -a /etc/cloud/cloud.cfg > /dev/null <<EOT
 network:
-  # config: disabled
+  config: disabled
 EOT
 
 ### Clean Cloud-Init. ### 
