@@ -78,6 +78,7 @@ sudo tee -a /etc/cloud/cloud.cfg > /dev/null <<EOT
 network:
   config: disabled
 EOT
+vmware-toolbox-cmd config set deployPkg enable-custom-scripts true
 
 ### Clean Cloud-Init. ### 
 echo '> Cleaning Cloud-Init...'
