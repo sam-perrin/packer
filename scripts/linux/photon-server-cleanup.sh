@@ -49,11 +49,11 @@ sudo tdnf clean all
 # sudo chown -R $BUILD_USERNAME /home/$BUILD_USERNAME/.ssh
 # sudo rm -rf /tmp/id_ecdsa.pub
 
-# ### Configure SSH for Public Key Authentication. ###
-# echo '> Configuring SSH for Public Key Authentication ...'
-# sudo sed -i '/^PermitRootLogin/s/yes/no/' /etc/ssh/sshd_config
-# sudo sed -i "s/.*PubkeyAuthentication.*/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
-# sudo sed -i '/^PasswordAuthentication/s/no/yes/' /etc/ssh/sshd_config
+### Configure SSH for Public Key Authentication. ###
+echo '> Configuring SSH for Public Key Authentication ...'
+sudo sed -i '/^PermitRootLogin/s/yes/no/' /etc/ssh/sshd_config
+sudo sed -i "s/.*PubkeyAuthentication.*/PubkeyAuthentication yes/g" /etc/ssh/sshd_config
+sudo sed -i '/^PasswordAuthentication/s/no/yes/' /etc/ssh/sshd_config
 
 ### Disable and clean tmp. ### 
 echo '> Disabling and clean tmp ...'
