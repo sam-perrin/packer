@@ -35,11 +35,11 @@ iso_checksum = "6ff96a5997bf0ae1c8dfd7c5ce6bf53d9142397a147ebd24256f302e91e733dc
 # Scripts
 # shell_scripts = ["../../../scripts/linux/ubuntu-server-cleanup.sh"]
 shell_scripts = [
-  "scripts/linux/centos/00-update.sh",
-  "scripts/linux/centos/06-packages.sh",
-  "scripts/linux/centos/10-sshd.sh",
-  "scripts/linux/centos/11-clean-tmp.sh",
-  "scripts/linux/centos/20-cloudinit.sh",
-  "scripts/linux/centos/90-additional-clean.sh",
-  "scripts/linux/centos/95-motd.sh"
+  "../../../scripts/linux/ubuntu/00-update.sh",
+  "../../../scripts/linux/ubuntu/06-packages.sh",
+  "../../../scripts/linux/ubuntu/10-sshd.sh",
+  "../../../scripts/linux/ubuntu/11-clean-tmp.sh",
+  "../../../scripts/linux/ubuntu/20-cloudinit.sh",
+  "../../../scripts/linux/ubuntu/90-additional-clean.sh",
+  "../../../scripts/linux/ubuntu/95-motd.sh"
 ]
