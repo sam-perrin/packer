@@ -33,5 +33,13 @@ iso_file     = "iso-linux-ubuntu-server-20-04.iso"
 iso_checksum = "6ff96a5997bf0ae1c8dfd7c5ce6bf53d9142397a147ebd24256f302e91e733dc8c165b265bd95f1cc07dbaa763a4ac7b4c1cd955aef818f0f37e1642a4be5840"
 
 # Scripts
-
-shell_scripts = ["../../../scripts/linux/ubuntu-server-cleanup.sh"]
+# shell_scripts = ["../../../scripts/linux/ubuntu-server-cleanup.sh"]
+shell_scripts = [
+  "scripts/linux/centos/00-update.sh",
+  "scripts/linux/centos/06-packages.sh",
+  "scripts/linux/centos/10-sshd.sh",
+  "scripts/linux/centos/11-clean-tmp.sh",
+  "scripts/linux/centos/20-cloudinit.sh",
+  "scripts/linux/centos/90-additional-clean.sh",
+  "scripts/linux/centos/95-motd.sh"
+]

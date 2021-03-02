@@ -37,5 +37,13 @@ iso_file     = "iso-linux-ubuntu-server-18-04-lts.iso"
 iso_checksum = "43738d7dfd3e2661e4d55d2e0f9d8150f0687f4335af9b4dac047bf45fafcb4a4831685281fd5a318c5747681c351375d1129094d3f1bf38d88ab4bb49b6c457"
 
 # Scripts
-
-shell_scripts = ["../../../scripts/linux/ubuntu-server-cleanup.sh"]
+# shell_scripts = ["../../../scripts/linux/ubuntu-server-cleanup.sh"]
+shell_scripts = [
+  "scripts/linux/centos/00-update.sh",
+  "scripts/linux/centos/06-packages.sh",
+  "scripts/linux/centos/10-sshd.sh",
+  "scripts/linux/centos/11-clean-tmp.sh",
+  "scripts/linux/centos/20-cloudinit.sh",
+  "scripts/linux/centos/90-additional-clean.sh",
+  "scripts/linux/centos/95-motd.sh"
+]

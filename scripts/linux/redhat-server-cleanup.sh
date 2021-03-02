@@ -1,5 +1,4 @@
 #!/bin/bash
-# Maintainer: code@rainpole.io
 # Prepares a Red Hat Enterprise Linux 8 Server guest operating system.
 
 export BUILD_USERNAME

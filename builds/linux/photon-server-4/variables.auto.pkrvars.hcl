@@ -34,5 +34,14 @@ iso_file     = "iso-linux-photon-server-4.iso"
 iso_checksum = "eb37c4cbd7a9812a2892f5bcbb7873cec211d544895ce38244b031368d8791c4cee21a8e3b7fb98175bf008bb21aa9530a507ffa24f7af83457869da6f396c6d"
 
 # Scripts
-
-shell_scripts = ["../../../scripts/linux/photon-server-cleanup.sh"]
+# shell_scripts = ["../../../scripts/linux/photon-server-cleanup.sh"]
+shell_scripts = [
+  "scripts/linux/centos/00-update.sh",
+  "scripts/linux/centos/01-network.sh",
+  "scripts/linux/centos/06-packages.sh",
+  "scripts/linux/centos/10-sshd.sh",
+  "scripts/linux/centos/11-clean-tmp.sh",
+  "scripts/linux/centos/20-cloudinit.sh",
+  "scripts/linux/centos/90-additional-clean.sh",
+  "scripts/linux/centos/95-motd.sh"
+]
