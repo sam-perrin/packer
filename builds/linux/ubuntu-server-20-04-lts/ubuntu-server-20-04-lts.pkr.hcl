@@ -282,8 +282,16 @@ source "vsphere-iso" "linux-ubuntu-server" {
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
   // boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ds=nocloud-net;s=${var.http_server}/ ","<enter><wait>"]
-    // /dev/sr1 is used because sr0 is the ISO we are booting from
-  boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ","<enter><wait>"]
+  // /dev/sr1 is used because sr0 is the ISO we are booting from
+  // boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ","<enter><wait>"]
+  boot_command              = [
+        "<esc><wait>",
+        "<esc><wait>",
+        "linux /casper/vmlinuz --- autoinstall ds=nocloud;seedfrom=/cidata/",
+        "<enter><wait>",
+        "initrd /casper/initrd<enter><wait>",
+        "boot<enter>"
+  ]
   ip_wait_timeout           = "20m"
   ssh_password              = var.build_password
   ssh_username              = var.build_username

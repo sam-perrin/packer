@@ -112,6 +112,12 @@ variable "iso_checksum" {
   default = ""
 }
 
+variable "custom_iso_path" {
+  type    = string
+  description = "The path to a custom iso to use for boot"
+  default = ""
+}
+
 # HTTP Endpoint for Kickstart
 
 variable "http_server" {
@@ -280,7 +286,10 @@ source "vsphere-iso" "linux-photon-server" {
     network      = var.vcenter_network
     network_card = var.vm_network_card
   }
-  iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
+  iso_paths                = [
+    var.custom_iso_path,
+    "${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"
+  ]
   iso_checksum             = "sha512:var.iso_checksum"
   cd_files                 = var.cd_files
 	cd_label                 = "cidata"
@@ -294,7 +303,7 @@ source "vsphere-iso" "linux-photon-server" {
   // /dev/sr1 is used because sr0 is the ISO we are booting from
   boot_command             = [
    "<esc><wait>",
-   "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/dev/sr1:/${var.boot_file} photon.media=cdrom",
+   "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/iso_checksum/${var.boot_file} photon.media=cdrom",
    "<enter>"
   ]
   ip_wait_timeout          = "20m"
