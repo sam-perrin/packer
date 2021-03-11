@@ -301,7 +301,7 @@ source "vsphere-iso" "linux-photon-server" {
   // /dev/sr1 is used because sr0 is the ISO we are booting from
   boot_command             = [
    "<esc><wait>",
-   "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/iso_checksum/${var.boot_file} photon.media=cdrom",
+   "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/isolinux/${var.boot_file} photon.media=cdrom",
    "<enter>"
   ]
   ip_wait_timeout          = "20m"

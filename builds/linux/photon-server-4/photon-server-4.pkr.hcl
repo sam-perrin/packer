@@ -288,7 +288,7 @@ source "vsphere-iso" "linux-photon-server" {
   boot_wait                = var.vm_boot_wait
   // boot_command             = ["<esc><wait> vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=${var.http_server}/${var.boot_file} photon.media=cdrom <enter>"]
   // /dev/sr1 is used because sr0 is the ISO we are booting from
-  boot_command             = ["<esc><wait> vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/dev/sr1:/${var.boot_file} photon.media=cdrom <enter>"]
+  boot_command             = ["<esc><wait> vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/isolinux/${var.boot_file} photon.media=cdrom <enter>"]
   ip_wait_timeout          = "20m"
   ssh_username             = var.build_username
   ssh_password             = var.build_password
