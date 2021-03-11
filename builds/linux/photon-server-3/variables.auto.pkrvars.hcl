@@ -30,7 +30,7 @@ vm_boot_wait                = "2s"
 # ISO Objects
 
 iso_file     = "iso-linux-photon-server-3.iso"
-iso_checksum = "c65e13a8799d349b3f652afb2a2e5c9ff039e64fc9e20d12e88e4c56d9daeaed693c17d0c0a270f4658db19e803db867504beb65faa9382359b108b73dbfabc0"
+iso_checksum = "sha512:c65e13a8799d349b3f652afb2a2e5c9ff039e64fc9e20d12e88e4c56d9daeaed693c17d0c0a270f4658db19e803db867504beb65faa9382359b108b73dbfabc0"
 
 # Scripts
 # shell_scripts = ["../../../scripts/linux/photon-server-cleanup.sh"]
