@@ -286,7 +286,7 @@ source "vsphere-iso" "linux-photon-server" {
     network      = var.vcenter_network
     network_card = var.vm_network_card
   }
-  iso_url                 = var.custom_iso_path
+  iso_url                  = var.custom_iso_path
   iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum             = var.iso_checksum
   cd_files                 = var.cd_files
@@ -298,7 +298,6 @@ source "vsphere-iso" "linux-photon-server" {
   //  "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=${var.http_server}/${var.boot_file} photon.media=cdrom",
   //  "<enter>"
   // ]
-  // /dev/sr1 is used because sr0 is the ISO we are booting from
   boot_command             = [
    "<esc><wait>",
    "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/isolinux/${var.boot_file} photon.media=cdrom",
