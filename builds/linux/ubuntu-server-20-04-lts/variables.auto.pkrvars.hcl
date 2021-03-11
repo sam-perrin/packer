@@ -29,8 +29,8 @@ vm_boot_wait                = "2s"
 
 # ISO Objects
 
-iso_file     = "iso-linux-ubuntu-server-20-04.iso"
-iso_checksum = "6ff96a5997bf0ae1c8dfd7c5ce6bf53d9142397a147ebd24256f302e91e733dc8c165b265bd95f1cc07dbaa763a4ac7b4c1cd955aef818f0f37e1642a4be5840"
+iso_file     = "iso-linux-ubuntu-server-20-04-lts.iso"
+iso_checksum = "c987c28985ade3979bef63b1e99885ba9c8650d9c09c7b83bd0a6e281752bb4bbf16c58525de2e6c8ace59290f4f335c71b0cec41367e0aacf4cea2ba0aa3ec7"
 
 # Scripts
 # shell_scripts = ["../../../scripts/linux/ubuntu-server-cleanup.sh"]
