@@ -126,7 +126,7 @@ variable "http_server" {
 #  default = ""
 #}
 
-variable "http_file" {
+variable "boot_file" {
   type    = string
   description = "The guest operating system kickstart file. (e.g. ks.cfg)"
   default = ""
@@ -230,6 +230,12 @@ variable "shell_scripts" {
   default = []
 }
 
+variable "cd_files" {
+  type    = list(string)
+  description = "A list of files to add to a cd, using their relative paths."
+  default = []
+}
+
 ##################################################################################
 # LOCALS
 ##################################################################################
@@ -276,9 +282,13 @@ source "vsphere-iso" "linux-centos-server" {
   }
   iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum             = "sha512:var.iso_checksum"
+  cd_files                 = var.cd_files
+	cd_label                 = "cidata"
   boot_order               = "disk,cdrom"
   boot_wait                = var.vm_boot_wait
-  boot_command             = ["<tab>","text ks=${var.http_server}/${var.http_file}","<enter><wait>"]
+  //boot_command             = ["<tab>","text ks=${var.http_server}/${var.boot_file}","<enter><wait>"]
+  // /dev/sr1 is used because sr0 is the ISO we are booting from
+  boot_command             = ["<tab>","text ks=cdrom:/dev/sr1:/${var.boot_file}","<enter><wait>"]
   ip_wait_timeout          = "20m"
   ssh_password             = var.build_password
   ssh_username             = var.build_username

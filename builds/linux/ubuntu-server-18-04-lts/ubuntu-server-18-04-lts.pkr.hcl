@@ -126,7 +126,7 @@ variable "http_server" {
 #  default = ""
 #}
 
-variable "http_file" {
+variable "boot_file" {
   type    = string
   description = "The guest operating system kickstart file. (e.g. ks.cfg)"
   default = ""

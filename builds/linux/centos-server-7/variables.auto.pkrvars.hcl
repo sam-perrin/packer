@@ -8,12 +8,10 @@
 # HTTP Endpoint for Kickstart
 
 #http_directory             = "../../../configs/linux/centos-server"
-http_server                 = ""
 boot_file                   = "ks-v7.cfg"
 cd_files                    = ["../../../configs/linux/centos-server/*"]
 
 # Virtual Machine Settings
-
 vm_guest_os_family          = "linux" 
 vm_guest_os_vendor          = "centos"
 vm_guest_os_member          = "server" 

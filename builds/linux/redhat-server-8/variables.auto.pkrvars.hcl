@@ -8,10 +8,10 @@
 # HTTP Kickstart Settings 
 
 #http_directory = "../../../configs/linux/redhat-server"
-http_file      = "ks-v8.cfg"
+boot_file      = "ks-v8.cfg"
+cd_files                    = ["../../../configs/linux/redhat-server/*"]
 
 # Virtual Machine Settings
-
 vm_guest_os_family          = "linux" 
 vm_guest_os_vendor          = "redhat"
 vm_guest_os_member          = "server" 

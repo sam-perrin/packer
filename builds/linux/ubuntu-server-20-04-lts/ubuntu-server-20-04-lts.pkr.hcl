@@ -224,6 +224,13 @@ variable "shell_scripts" {
   default = []
 }
 
+variable "cd_files" {
+  type    = list(string)
+  description = "A list of files to add to a cd, using their relative paths."
+  default = []
+}
+
+
 ##################################################################################
 # LOCALS
 ##################################################################################
@@ -270,9 +277,13 @@ source "vsphere-iso" "linux-ubuntu-server" {
   }
   iso_paths                 = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum              = "sha512:var.iso_checksum"
+  cd_files                 = var.cd_files
+	cd_label                 = "cidata"
   boot_order                = "disk,cdrom"
   boot_wait                 = var.vm_boot_wait
-  boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ds=nocloud-net;s=${var.http_server}/ ","<enter><wait>"]
+  // boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ds=nocloud-net;s=${var.http_server}/ ","<enter><wait>"]
+    // /dev/sr1 is used because sr0 is the ISO we are booting from
+  boot_command              = ["<enter><enter><f6><esc><wait> ","autoinstall ","ip=dhcp ipv6.disable=1 ","<enter><wait>"]
   ip_wait_timeout           = "20m"
   ssh_password              = var.build_password
   ssh_username              = var.build_username

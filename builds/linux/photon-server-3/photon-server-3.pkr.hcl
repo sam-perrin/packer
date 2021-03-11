@@ -126,7 +126,7 @@ variable "http_server" {
 #  default = ""
 #}
 
-variable "http_file" {
+variable "boot_file" {
   type    = string
   description = "The guest operating system kickstart file. (e.g. ks.json)"
   default = ""
@@ -230,6 +230,12 @@ variable "shell_scripts" {
   default = []
 }
 
+variable "cd_files" {
+  type    = list(string)
+  description = "A list of files to add to a cd, using their relative paths."
+  default = []
+}
+
 ##################################################################################
 # LOCALS
 ##################################################################################
@@ -276,12 +282,20 @@ source "vsphere-iso" "linux-photon-server" {
   }
   iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum             = "sha512:var.iso_checksum"
+  cd_files                 = var.cd_files
+	cd_label                 = "cidata"
   boot_order               = "disk,cdrom"
   boot_wait                = var.vm_boot_wait
+  // boot_command             = [
+  //  "<esc><wait>",
+  //  "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=${var.http_server}/${var.boot_file} photon.media=cdrom",
+  //  "<enter>"
+  // ]
+  // /dev/sr1 is used because sr0 is the ISO we are booting from
   boot_command             = [
-    "<esc><wait>",
-    "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=${var.http_server}/${var.http_file} photon.media=cdrom",
-    "<enter>"
+   "<esc><wait>",
+   "vmlinuz initrd=initrd.img root=/dev/ram0 loglevel=3 ks=cdrom:/dev/sr1:/${var.boot_file} photon.media=cdrom",
+   "<enter>"
   ]
   ip_wait_timeout          = "20m"
   ssh_username             = var.build_username

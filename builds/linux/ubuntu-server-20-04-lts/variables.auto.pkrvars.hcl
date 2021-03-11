@@ -8,9 +8,9 @@
 # HTTP Kickstart Settings
 
 #http_directory = "../../../configs/linux/ubuntu-server"
+cd_files                    = ["../../../configs/linux/ubuntu-server/meta-data","../../../configs/linux/ubuntu-server/user-data"]
 
 # Virtual Machine Settings
-
 vm_guest_os_family          = "linux" 
 vm_guest_os_vendor          = "ubuntu"
 vm_guest_os_member          = "server" 

@@ -8,10 +8,10 @@
 # HTTP Endpoint for Kickstart
 
 #http_directory = "../../../configs/linux/photon-server"
-http_file      = "ks.json"
+boot_file      = "ks.json"
+cd_files                    = ["../../../configs/linux/photon-server/*"]
 
 # Virtual Machine Settings
-
 vm_guest_os_family          = "linux" 
 vm_guest_os_vendor          = "photon"
 vm_guest_os_member          = "server" 
