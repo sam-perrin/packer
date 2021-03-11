@@ -287,7 +287,7 @@ source "vsphere-iso" "linux-photon-server" {
     network_card = var.vm_network_card
   }
   iso_url                 = var.custom_iso_path
-  iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
+  // iso_paths                = ["${ var.iso_datastore }${ var.iso_path }/${ var.iso_file }"]
   iso_checksum             = "sha512:var.iso_checksum"
   cd_files                 = var.cd_files
 	cd_label                 = "cidata"
