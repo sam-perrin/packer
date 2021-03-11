@@ -341,7 +341,6 @@ source "vsphere-iso" "windows-server-standard-core" {
   folder               = var.vcenter_folder
   insecure_connection  = var.vcenter_insecure_connection
   tools_upgrade_policy = true
-  remove_cdrom         = true
   convert_to_template  = true
   guest_os_type        = var.vm_guest_os_type
   vm_version           = var.vm_version
@@ -404,7 +403,6 @@ source "vsphere-iso" "windows-server-datacenter-dexp" {
   folder               = var.vcenter_folder
   insecure_connection  = var.vcenter_insecure_connection
   tools_upgrade_policy = true
-  remove_cdrom         = true
   convert_to_template  = true
   guest_os_type        = var.vm_guest_os_type
   vm_version           = var.vm_version
@@ -467,7 +465,6 @@ source "vsphere-iso" "windows-server-datacenter-core" {
   folder               = var.vcenter_folder
   insecure_connection  = var.vcenter_insecure_connection
   tools_upgrade_policy = true
-  remove_cdrom         = true
   convert_to_template  = true
   guest_os_type        = var.vm_guest_os_type
   vm_version           = var.vm_version

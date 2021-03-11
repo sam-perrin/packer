@@ -16,13 +16,13 @@ vm_guest_os_type            = "windows9Server64Guest"
 vm_version                  = 17
 vm_firmware                 = "bios"
 vm_boot_command             = ["<spacebar>"]
-vm_boot_wait                = "2s"
+vm_boot_wait                = "10s"
 vm_cdrom_type               = "sata"
 vm_cpu_sockets              = 2
 vm_cpu_cores                = 1
-vm_mem_size                 = 2048
-vm_disk_size                = 102400
-vm_disk_controller_type     = ["pvscsi"]
+vm_mem_size                 = 4096
+vm_disk_size                = 40960
+vm_disk_controller_type     = ["lsilogic-sas"]
 vm_network_card             = "vmxnet3"
 vm_floppy_files_server_std_dexp = [
   "../../../configs/windows/windows-server-2016/standard/bios/autounattend.xml",
@@ -63,11 +63,7 @@ powershell_scripts = [
 powershell_inline = [
   "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
   "choco feature enable -n allowGlobalConfirmation",
-  "choco install googlechrome",
-  "choco install firefox",
-  "choco install postman",
   "choco install winscp",
   "choco install putty",
-  "choco install vscode",
   "Get-EventLog -LogName * | ForEach { Clear-EventLog -LogName $_.Log }"
   ]
