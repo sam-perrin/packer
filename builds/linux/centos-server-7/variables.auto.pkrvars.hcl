@@ -10,7 +10,7 @@
 #http_directory             = "../../../configs/linux/centos-server"
 http_server                 = ""
 boot_file                   = "ks-v7.cfg"
-cd_files                    = ["../../../configs/linux/centos-server"]
+cd_files                    = ["../../../configs/linux/centos-server/*"]
 
 # Virtual Machine Settings
 
