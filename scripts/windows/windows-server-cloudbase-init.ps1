@@ -21,10 +21,10 @@ Invoke-WebRequest -Uri "https://cloudbase.it/downloads/$CloudbaseFileName" -OutF
 
 
 # install the payload
-Start-process -FilePath 'C:\Windows\temp\$CloudbaseFileName' -ArgumentList '/qn /l*v C:\windows\temp\cloud-init.log LOGGINGSERIALPORTNAME=COM1 USERNAME=Administrator' -passthru | wait-process
+Start-process -FilePath "C:\Windows\temp\$CloudbaseFileName" -ArgumentList '/qn /l*v C:\windows\temp\cloud-init.log LOGGINGSERIALPORTNAME=COM1 USERNAME=Administrator' -passthru | wait-process
 
 # verify that cloudbase-init tools exists
-if (-not(test-path -path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts")) {                                                                                                                                              
+if (-not(test-path -path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\")) {                                                                                                                                              
   Write-output "cloudbase-init not installed exiting..."
   exit 1
 }   
