@@ -29,8 +29,8 @@ if (-not(test-path -path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\")
   exit 1
 }   
 
-Move-Item C:\Windows\Temp\cloudbase-init-unattend.conf "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init-unattend.conf" -force
-Move-Item C:\Windows\Temp\cloudbase-init.conf "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init.conf" -force
+#Move-Item C:\Windows\Temp\cloudbase-init-unattend.conf "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init-unattend.conf" -force
+#Move-Item C:\Windows\Temp\cloudbase-init.conf "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init.conf" -force
 #Move-Item C:\Windows\Temp\cloudbase-init-firstboot.ps1 "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts\cloudbase-init-firstboot.ps1" -force
 Start-Process -NoNewWindow -FilePath "C:/Windows/system32/sc.exe" -ArgumentList "config cloudbase-init start=demand" -Wait
 
@@ -86,5 +86,8 @@ metadata_services=cloudbaseinit.metadata.services.ovfservice.OvfService
 plugins=cloudbaseinit.plugins.windows.createuser.CreateUserPlugin,cloudbaseinit.plugins.windows.setuserpassword.SetUserPasswordPlugin,cloudbaseinit.plugins.common.sshpublickeys.SetUserSSHPublicKeysPlugin,cloudbaseinit.plugins.common.userdata.UserDataPlugin
 "@
 
-Set-Content -Path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init-unattend.conf" -Value $CloudbaseInitUnattendContents
-Set-Content -Path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init.conf" -Value $CloudbaseInitContents
+
+New-Item -Path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init-unattend.conf" -ItemType File -Value $CloudbaseInitUnattendContents -Force
+New-Item -Path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init.conf" -ItemType File -Value $CloudbaseInitContents -Force
+#Set-Content -Path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init-unattend.conf" -Value $CloudbaseInitUnattendContents
+#Set-Content -Path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init.conf" -Value $CloudbaseInitContents
