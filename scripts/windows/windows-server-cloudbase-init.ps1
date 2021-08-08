@@ -1,14 +1,30 @@
 #download installer
-$client = new-object System.Net.WebClient
-$client.DownloadFile("https://cloudbase.it/downloads/CloudbaseInitSetup_Stable_x64.msi", "C:\Windows\temp\CloudbaseInitSetup_Stable_x64.msi" )
+#$client = new-object System.Net.WebClient
+#$client.DownloadFile("https://cloudbase.it/downloads/CloudbaseInitSetup_Stable_x64.msi", "C:\Windows\temp\CloudbaseInitSetup_Stable_x64.msi" )
+
+add-type @"
+    using System.Net;
+    using System.Security.Cryptography.X509Certificates;
+    public class TrustAllCertsPolicy : ICertificatePolicy {
+        public bool CheckValidationResult(
+            ServicePoint srvPoint, X509Certificate certificate,
+            WebRequest request, int certificateProblem) {
+            return true;
+        }
+    }
+"@
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+
+Invoke-WebRequest -Uri "https://cloudbase.it/downloads/CloudbaseInitSetup_Stable_x64.msi" -OutFile "C:\Windows\temp\CloudbaseInitSetup_Stable_x64.msi" -UseBasicParsing -
+
 
 # install the payload
 Start-process -FilePath 'C:\Windows\temp\CloudbaseInitSetup_Stable_x64.msi' -ArgumentList '/qn /l*v C:\windows\temp\cloud-init.log LOGGINGSERIALPORTNAME=COM1 USERNAME=Administrator' -passthru | wait-process
 
 # verify that cloudbase-init tools exists
-if (-not(test-path -path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts")){                                                                                                                                              
-Write-output "cloudbase-init not installed exiting..."
-exit 1
+if (-not(test-path -path "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts")) {                                                                                                                                              
+  Write-output "cloudbase-init not installed exiting..."
+  exit 1
 }   
 
 Move-Item C:\Windows\Temp\cloudbase-init-unattend.conf "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init-unattend.conf" -force
