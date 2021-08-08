@@ -11,12 +11,9 @@ Write-output "cloudbase-init not installed exiting..."
 exit 1
 }   
 
-
-
-
 Move-Item C:\Windows\Temp\cloudbase-init-unattend.conf "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init-unattend.conf" -force
 Move-Item C:\Windows\Temp\cloudbase-init.conf "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\conf\cloudbase-init.conf" -force
-Move-Item C:\Windows\Temp\cloudbase-init-firstboot.ps1 "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts\cloudbase-init-firstboot.ps1" -force
+#Move-Item C:\Windows\Temp\cloudbase-init-firstboot.ps1 "C:\Program Files\Cloudbase Solutions\Cloudbase-Init\LocalScripts\cloudbase-init-firstboot.ps1" -force
 Start-Process -nonewwindow -FilePath "C:/Windows/system32/sc.exe" -ArgumentList "config cloudbase-init start= demand" -wait
 
 #cloudbase-init-unattend.conf
