@@ -78,7 +78,8 @@ iso_checksum  = "8962ccd82d4898a84d11cb218b6a9b1d8aa6c96712a87cc1965aebd4a7534e0
 # PowerShell Provisioner Objects
 
 powershell_scripts = [
-  "../../../scripts/windows/windows-server-cleanup.ps1"
+    "../../../scripts/windows/windows-server-cloudbase-init.ps1",
+    "../../../scripts/windows/windows-server-cleanup.ps1"
   ]
 powershell_inline = [
   "Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))",
